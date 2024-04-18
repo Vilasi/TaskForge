@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 //Import Components
 import ProjectInput from './ProjectInput';
 
-export default function MainContent({ addingProject, changeAddingState }) {
-  //   const [isAddingNewProject, setIsAddingNewProject] = useState(false);
+export default function MainContent({
+  addingProject,
+  changeAddingState,
+  projects,
+}) {
+  const titleInputRef = useRef();
+  const descriptionInputRef = useRef();
+  const dateInputRef = useRef();
+
+  // TODO Pickup Here
+  function saveProject() {
+    projects[titleInputRef.current.value] = {
+      title: titleInputRef.current.value,
+      description: descriptionInputRef.current.value,
+      date: dateInputRef.current.value,
+    };
+    console.log(projects);
+  }
 
   let content;
 
   if (addingProject) {
     content = (
       <form action="" className="flex flex-col w-10/12 sm:w-3/5">
+        {/* Buttons **************************************************************/}
         <div className="grow text-right mb-8">
+          {/* Cancel Button */}
           <button
             onClick={changeAddingState}
             type="button"
@@ -19,20 +37,31 @@ export default function MainContent({ addingProject, changeAddingState }) {
           >
             Cancel
           </button>
-          <button className="bg-stone-800 text-stone-300 text-lg px-7 py-2 rounded-md hover:shadow">
+
+          {/* Save Button */}
+          <button
+            onClick={saveProject}
+            type="button"
+            className="bg-stone-800 text-stone-300 text-lg px-7 py-2 rounded-md hover:shadow"
+          >
             Save
           </button>
         </div>
 
-        <ProjectInput id={'title'} type={'text'}>
+        {/* Inputs **************************************************************/}
+        <ProjectInput inputRef={titleInputRef} id={'title'} type={'text'}>
           Title
         </ProjectInput>
 
-        <ProjectInput id={'description'} type={'textarea'}>
+        <ProjectInput
+          inputRef={descriptionInputRef}
+          id={'description'}
+          type={'textarea'}
+        >
           Description
         </ProjectInput>
 
-        <ProjectInput id={'date'} type={'date'}>
+        <ProjectInput inputRef={dateInputRef} id={'date'} type={'date'}>
           Date
         </ProjectInput>
       </form>

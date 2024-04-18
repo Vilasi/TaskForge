@@ -1,26 +1,39 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Fragment } from 'react';
 
 //Import Components
 import ProjectInput from './ProjectInput';
+import DefaultScreen from './DefaultScreen';
+import DeleteModal from './DeleteModal';
 
 export default function MainContent({
   addingProject,
   changeAddingState,
   projects,
+  projectSelected,
+  setProjectSelected,
 }) {
   const titleInputRef = useRef();
   const descriptionInputRef = useRef();
   const dateInputRef = useRef();
+  const dialogRef = useRef();
 
-  // TODO Pickup Here
   function saveProject() {
-    projects[titleInputRef.current.value] = {
-      title: titleInputRef.current.value,
-      description: descriptionInputRef.current.value,
+    projects.push({
       date: dateInputRef.current.value,
-    };
-    console.log(projects);
+      description: descriptionInputRef.current.value,
+      title: titleInputRef.current.value,
+    });
+    changeAddingState();
+    setProjectSelected([true, { ...projects.at(-1) }]);
   }
+
+  function deleteProject() {
+    dialogRef.current.showModal();
+  }
+  console.log(projectSelected);
+
+  const deleteButtonClasses =
+    'text-stone-700 text-lg me-3 px-7 py-2 rounded-md border border-stone-50 hover:shadow hover:border-stone-300';
 
   let content;
 
@@ -31,9 +44,12 @@ export default function MainContent({
         <div className="grow text-right mb-8">
           {/* Cancel Button */}
           <button
-            onClick={changeAddingState}
+            onClick={() => {
+              changeAddingState();
+              setProjectSelected([false, {}]);
+            }}
             type="button"
-            className="text-stone-700 text-lg me-3 px-7 py-2 rounded-md border border-stone-50 hover:shadow hover:border-stone-300"
+            className={deleteButtonClasses}
           >
             Cancel
           </button>
@@ -66,28 +82,28 @@ export default function MainContent({
         </ProjectInput>
       </form>
     );
-  } else {
+  } else if (!addingProject && projectSelected[0]) {
     content = (
-      <>
-        <h1 className="my-8 text-center text-4xl font-bold text-stone-700">
-          No Project Selected
-        </h1>
-        <p className="text-center text-xl font-semibold text-stone-400">
-          Select a project or get started with a new one
-        </p>
-        <div className="mt-10">
-          <button
-            onClick={changeAddingState}
-            className="bg-stone-800 text-stone-300 font-semibold text-lg px-6 py-3 basis-4 rounded-md"
-          >
-            Create new project
+      <div className="flex flex-col w-10/12 sm:w-4/5">
+        <header className="flex justify-between">
+          <h1 className="font-bold text-2xl sm:text-4xl">
+            {projectSelected[1].title}
+          </h1>
+
+          <button onClick={deleteProject} className={deleteButtonClasses}>
+            Test
           </button>
-        </div>
-      </>
+        </header>
+      </div>
     );
+  } else {
+    content = <DefaultScreen changeAddingState={changeAddingState} />;
   }
 
   return (
-    <main className=" flex-1 mt-40 flex flex-col items-center">{content}</main>
+    <main className=" flex-1 mt-40 flex flex-col items-center">
+      <DeleteModal ref={dialogRef} />
+      {content}
+    </main>
   );
 }

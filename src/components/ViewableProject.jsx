@@ -42,27 +42,9 @@ export default function ViewableProject({
     e.preventDefault();
     const userInput = inputRef.current.value;
 
-    // This adds a task to the specified project, and updates the projects state
     addNewTask(userInput, tasks, setProjects);
-
     inputRef.current.value = '';
   }
-
-  //   function handleKeyDown(e) {
-  //     e.preventDefault();
-  //     console.log(e.key);
-  //     const userInput = inputRef.current.value;
-  //     if (e.key === 'Enter') {
-  //       addNewTask(userInput, tasks, setProjects);
-  //       inputRef.current.value = '';
-  //     } else {
-  //       const regex = /^[a-zA-Z0-9 .,!?@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
-  //       if (regex.test(e.key)) {
-  //         inputRef.current.value += e.key;
-  //       }
-  //     }
-
-  //   }
 
   function handleTaskClearClick(index) {
     setProjects((prevState) => {
@@ -70,9 +52,12 @@ export default function ViewableProject({
       const projectsSubArrayCopy = prevState[1].map((obj) => {
         return { ...obj };
       });
-
       const tasksArrayCopy = [...projectsSubArrayCopy[prevState[2]].tasks];
+
+      tasksArrayCopy.splice(index, 1);
+      projectsSubArrayCopy[prevState[2]].tasks = tasksArrayCopy;
       shallowStateCopy[1] = projectsSubArrayCopy;
+
       return shallowStateCopy;
     });
   }
@@ -118,10 +103,12 @@ export default function ViewableProject({
               {task}
             </p>
             <ClearButton
-              onClick={handleTaskClearClick}
+              onClick={(e) => {
+                handleTaskClearClick(index);
+              }}
               classes="hover:text-red-600"
             >
-              Clear
+              &#10003;
             </ClearButton>
           </div>
         ))}

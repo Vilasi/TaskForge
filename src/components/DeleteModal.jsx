@@ -7,11 +7,6 @@ const DeleteModal = forwardRef(function DeleteModal({ deleteProject }, ref) {
       ref={ref}
       className="w-fit pb-3 px-2 rounded backdrop:backdrop-brightness-50"
     >
-      {/* <form className="text-right" action="" method="dialog">
-        <button className="py-1 px-2 m-1 bg-red-600 hover:bg-red-700">
-          Close
-        </button>
-      </form> */}
       <div className="w-full flex flex-col items-center">
         <h1 className="font-bold text-2xl mb-2 px-3 pt-3">
           Confirm Delete Project?

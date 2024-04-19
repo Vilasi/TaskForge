@@ -24,6 +24,7 @@ export default function ProjectList({
         {projects[1].map((doc, index) => {
           return (
             <button
+              key={doc.title}
               onClick={() => selectProject(index)}
               className={`w-full text-left hover:bg-stone-800 focus:bg-stone-800 ${
                 projects[0] && projects[1].at(projects[2]).title === doc.title

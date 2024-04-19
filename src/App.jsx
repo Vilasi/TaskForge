@@ -4,12 +4,27 @@ import { useState } from 'react';
 import MainContent from './components/MainContent';
 import ProjectList from './components/ProjectList';
 
+let projectsStarter = [false, [], 0];
+let projectsFromLocalStorage = JSON.parse(localStorage.getItem('projects'));
+if (projectsFromLocalStorage) {
+  projectsStarter = projectsFromLocalStorage;
+}
 function App() {
   // This projects array === ["Is project currently selected? boolean", [project docs array], "currently selected project index"]
-  const [projects, setProjects] = useState([false, [], 0]);
+  const [projects, setProjects] = useState(projectsStarter);
   const [addingProject, setAddingProject] = useState(false);
 
-  console.log(projects);
+  localStorage.setItem('projects', JSON.stringify(projects));
+  // if (JSON.parse(localStorage.getItem('projects'))) {
+  //   setProjects();
+  // }
+  // setProjects((prevState) => {
+  //   return JSON.parse(localStorage.getItem('projects'));
+  // });
+  // let projectsFromStorage = JSON.parse(localStorage.getItem('projects'));
+  // console.log(projectsFromStorage.length);
+
+  console.log(localStorage.length);
   return (
     <div className="flex flex-col md:flex-row">
       <ProjectList

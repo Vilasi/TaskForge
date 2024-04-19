@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 
 const DeleteModal = forwardRef(function DeleteModal({ deleteProject }, ref) {
@@ -19,7 +19,6 @@ const DeleteModal = forwardRef(function DeleteModal({ deleteProject }, ref) {
           >
             Yes
           </button>
-          {/* <button className="py-2 px-4 m-1 bg-red-700">No</button> */}
           <form action="" method="dialog">
             <button className="py-2 px-4 m-1 rounded bg-red-700">No</button>
           </form>

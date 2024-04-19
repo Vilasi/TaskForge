@@ -1,7 +1,6 @@
-import { useState, useRef, Fragment } from 'react';
+import { useRef } from 'react';
 
 //Import Components
-
 import DefaultScreen from './DefaultScreen';
 import DeleteModal from './DeleteModal';
 import ProjectCreationForm from './ProjectCreationForm';
@@ -39,7 +38,6 @@ export default function MainContent({
 
   //* Conditionally Render Content Based on User Selection
   let content;
-  //For adding a new project
   if (addingProject) {
     content = (
       <ProjectCreationForm
@@ -56,7 +54,6 @@ export default function MainContent({
       />
     );
   } else {
-    //The default screen
     content = <DefaultScreen changeAddingState={changeAddingState} />;
   }
 

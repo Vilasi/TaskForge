@@ -25,9 +25,7 @@ export default function ViewableProject({
 }) {
   const inputRef = useRef();
 
-  //   console.log(projects);
   const currentProject = projects[1].at(projects[2]);
-
   const title = currentProject.title;
   const date = new Date(currentProject.date);
   const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -79,7 +77,7 @@ export default function ViewableProject({
       <h2 className="font-bold text-2xl sm:text-3xl mb-5 text-center md:text-start">
         Tasks
       </h2>
-
+      {/* Task Adding Form */}
       <form action="" className="w-full flex flex-col items-center md:block">
         <input
           ref={inputRef}
@@ -96,6 +94,7 @@ export default function ViewableProject({
         </button>
       </form>
 
+      {/* Task List */}
       <div className="w-full my-10 py-5 px-7 bg-gray-100">
         {tasks.map((task, index) => (
           <div className="flex justify-between items-center my-3 ">

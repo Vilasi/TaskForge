@@ -1,9 +1,14 @@
 export default function ProjectList({
   changeAddingState,
   projects,
-  projectSelected,
-  setProjectSelected,
+  setProjects,
 }) {
+  function selectProject(index) {
+    setProjects((prevState) => {
+      return [true, [...prevState[1]], index];
+    });
+  }
+
   return (
     <aside className="mt-12 md:w-1/4 bg-stone-900 text-stone-50 rounded-r-xl py-16 px-8 md:h-dvh">
       <h2 className="uppercase font-bold text-2xl mb-8">Your Projects</h2>
@@ -16,12 +21,12 @@ export default function ProjectList({
       </button>
 
       <ul>
-        {projects.map((doc) => {
+        {projects[1].map((doc, index) => {
           return (
             <button
-              onClick={() => setProjectSelected([true, { ...doc }])}
+              onClick={() => selectProject(index)}
               className={`w-full text-left hover:bg-stone-800 focus:bg-stone-800 ${
-                projectSelected[1].title === doc.title
+                projects[0] && projects[1].at(projects[2]).title === doc.title
                   ? 'bg-stone-800'
                   : undefined
               }`}

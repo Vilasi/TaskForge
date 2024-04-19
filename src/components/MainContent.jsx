@@ -9,8 +9,7 @@ export default function MainContent({
   addingProject,
   changeAddingState,
   projects,
-  projectSelected,
-  setProjectSelected,
+  setProjects,
 }) {
   const titleInputRef = useRef();
   const descriptionInputRef = useRef();
@@ -18,19 +17,45 @@ export default function MainContent({
   const dialogRef = useRef();
 
   function saveProject() {
-    projects.push({
-      date: dateInputRef.current.value,
-      description: descriptionInputRef.current.value,
-      title: titleInputRef.current.value,
+    setProjects((prevState) => {
+      const projectCopy = prevState[1].map((doc) => {
+        return { ...doc };
+      });
+
+      projectCopy.push({
+        date: dateInputRef.current.value,
+        description: descriptionInputRef.current.value,
+        title: titleInputRef.current.value,
+        tasks: [],
+      });
+
+      return [true, projectCopy, projectCopy.length - 1];
     });
+
     changeAddingState();
-    setProjectSelected([true, { ...projects.at(-1) }]);
+  }
+
+  function openDeleteProjectModal() {
+    dialogRef.current.showModal();
   }
 
   function deleteProject() {
-    dialogRef.current.showModal();
+    const currentProjectTitle = projects[1].at(projects[2]).title;
+
+    setProjects((prevState) => {
+      const projectArrayCopy = [...prevState[1]];
+      const filteredProjectArray = projectArrayCopy.filter((doc) => {
+        return doc.title !== currentProjectTitle;
+      });
+      const updatedProjects = filteredProjectArray.map((doc) => {
+        return { ...doc };
+      });
+
+      return [false, updatedProjects, 0];
+    });
+
+    dialogRef.current.close();
   }
-  console.log(projectSelected);
 
   const deleteButtonClasses =
     'text-stone-700 text-lg me-3 px-7 py-2 rounded-md border border-stone-50 hover:shadow hover:border-stone-300';
@@ -46,7 +71,11 @@ export default function MainContent({
           <button
             onClick={() => {
               changeAddingState();
-              setProjectSelected([false, {}]);
+              setProjects((prevState) => [
+                false,
+                [...prevState[1]],
+                prevState[2],
+              ]);
             }}
             type="button"
             className={deleteButtonClasses}
@@ -82,16 +111,19 @@ export default function MainContent({
         </ProjectInput>
       </form>
     );
-  } else if (!addingProject && projectSelected[0]) {
+  } else if (!addingProject && projects[0]) {
     content = (
       <div className="flex flex-col w-10/12 sm:w-4/5">
         <header className="flex justify-between">
           <h1 className="font-bold text-2xl sm:text-4xl">
-            {projectSelected[1].title}
+            {projects[1].at(projects[2]).title}
           </h1>
 
-          <button onClick={deleteProject} className={deleteButtonClasses}>
-            Test
+          <button
+            onClick={openDeleteProjectModal}
+            className={deleteButtonClasses}
+          >
+            Delete
           </button>
         </header>
       </div>
@@ -102,7 +134,7 @@ export default function MainContent({
 
   return (
     <main className=" flex-1 mt-40 flex flex-col items-center">
-      <DeleteModal ref={dialogRef} />
+      <DeleteModal ref={dialogRef} deleteProject={deleteProject} />
       {content}
     </main>
   );

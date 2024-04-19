@@ -4,25 +4,21 @@ import { useState } from 'react';
 import MainContent from './components/MainContent';
 import ProjectList from './components/ProjectList';
 
-const projects = [];
-
 function App() {
+  // This projects array === ["Is project currently selected? boolean", [project docs array], "currently selected project index"]
+  const [projects, setProjects] = useState([false, [], 0]);
   const [addingProject, setAddingProject] = useState(false);
-  const [projectSelected, setProjectSelected] = useState([false, {}]);
 
-  // console.log(projectSelected);
-
+  console.log(projects);
   return (
     <div className="flex flex-col md:flex-row">
       <ProjectList
-        projectSelected={projectSelected}
-        setProjectSelected={setProjectSelected}
         projects={projects}
+        setProjects={setProjects}
         changeAddingState={() => setAddingProject((prevState) => !prevState)}
       />
       <MainContent
-        setProjectSelected={setProjectSelected}
-        projectSelected={projectSelected}
+        setProjects={setProjects}
         projects={projects}
         addingProject={addingProject}
         changeAddingState={() => setAddingProject((prevState) => !prevState)}

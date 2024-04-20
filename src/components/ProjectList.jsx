@@ -27,7 +27,7 @@ export default function ProjectList({
               key={doc.title}
               onClick={() => selectProject(index)}
               className={`w-full text-left hover:bg-stone-800 focus:bg-stone-800 ${
-                projects[0] && projects[1].at(projects[2]).title === doc.title
+                projects[0] && projects[2] === index
                   ? 'bg-stone-800'
                   : undefined
               }`}

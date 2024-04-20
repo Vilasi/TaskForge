@@ -10,7 +10,7 @@ export default function ProjectList({
   }
 
   return (
-    <aside className="mt-12 md:w-1/4 bg-stone-900 text-stone-50 rounded-r-xl py-16 px-8 md:h-dvh">
+    <aside className="md:mt-12 md:w-1/4 bg-stone-900 text-stone-50 md:rounded-r-xl py-16 px-8 md:h-dvh">
       <h2 className="uppercase font-bold text-2xl mb-8">Your Projects</h2>
 
       <button

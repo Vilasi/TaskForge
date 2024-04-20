@@ -61,7 +61,7 @@ export default function ViewableProject({
   }
 
   return (
-    <div className="flex flex-col w-10/12 sm:w-4/5">
+    <div className="flex flex-col w-10/12 sm:w-4/5 mt-10 md:mt-0">
       <header className="flex justify-between mb-4">
         <h1 className="font-bold text-2xl sm:text-4xl">{title}</h1>
         <ClearButton onClick={openDeleteProjectModal}>Delete</ClearButton>
@@ -82,13 +82,13 @@ export default function ViewableProject({
         <input
           ref={inputRef}
           type="text"
-          className="bg-gray-200 p-2 w-4/6 md:w-1/2"
+          className="bg-gray-200 p-2 w-5/6 md:w-1/2"
         />
         <button
           onClick={(e) => {
             handleTaskAddingClick(e);
           }}
-          className="text-stone-700 text-lg me-3 px-7 py-2 rounded-md border border-stone-50 hover:shadow hover:border-stone-300 ms-10 mt-4 md:mt-0"
+          className="text-stone-700 text-lg me-3 px-7 py-2 rounded-md border border-stone-50 hover:shadow hover:border-stone-300 mt-4 md:ms-4 md:mt-0"
         >
           Add Task
         </button>
@@ -105,7 +105,7 @@ export default function ViewableProject({
               onClick={(e) => {
                 handleTaskClearClick(index);
               }}
-              classes="hover:text-red-600"
+              classes="hover:text-green-700"
             >
               &#10003;
             </ClearButton>

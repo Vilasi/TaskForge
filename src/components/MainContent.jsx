@@ -23,14 +23,9 @@ export default function MainContent({
 
     setProjects((prevState) => {
       const projectArrayCopy = [...prevState[1]];
-      const filteredProjectArray = projectArrayCopy.filter((doc) => {
-        return doc.title !== currentProjectTitle;
-      });
-      const updatedProjects = filteredProjectArray.map((doc) => {
-        return { ...doc };
-      });
+      projectArrayCopy.splice(prevState[2], 1);
 
-      return [false, updatedProjects, 0];
+      return [false, projectArrayCopy, 0];
     });
 
     dialogRef.current.close();
@@ -58,7 +53,7 @@ export default function MainContent({
   }
 
   return (
-    <main className=" flex-1 mt-40 flex flex-col items-center">
+    <main className=" flex-1 flex flex-col items-center justify-center flex-grow">
       <DeleteModal ref={dialogRef} deleteProject={deleteProject} />
       {content}
     </main>

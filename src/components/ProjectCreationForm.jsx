@@ -36,15 +36,7 @@ export default function ProjectCreationForm({
   }
 
   return (
-    <form
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-        }
-      }}
-      action=""
-      className="flex flex-col w-10/12 sm:w-3/5"
-    >
+    <form action="" className="flex flex-col w-10/12 sm:w-3/5">
       {/* Buttons **************************************************************/}
       <div className="grow text-right mb-8">
         {/* Cancel Button */}

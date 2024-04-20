@@ -18,9 +18,9 @@ export default function ProjectCreationForm({
       });
 
       projectCopy.push({
-        date: dateInputRef.current.value,
-        description: descriptionInputRef.current.value,
-        title: titleInputRef.current.value,
+        date: dateInputRef.current.value || new Date(),
+        description: descriptionInputRef.current.value || 'No Description',
+        title: titleInputRef.current.value || 'Unnamed Project',
         tasks: [],
       });
 
@@ -36,7 +36,15 @@ export default function ProjectCreationForm({
   }
 
   return (
-    <form action="" className="flex flex-col w-10/12 sm:w-3/5">
+    <form
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+        }
+      }}
+      action=""
+      className="flex flex-col w-10/12 sm:w-3/5"
+    >
       {/* Buttons **************************************************************/}
       <div className="grow text-right mb-8">
         {/* Cancel Button */}
@@ -45,7 +53,7 @@ export default function ProjectCreationForm({
         {/* Save Button */}
         <button
           onClick={saveProject}
-          type="button"
+          type="submit"
           className="bg-stone-800 text-stone-300 text-lg px-7 py-2 rounded-md hover:shadow"
         >
           Save

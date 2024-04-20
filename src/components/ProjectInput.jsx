@@ -1,4 +1,10 @@
-export default function ProjectInput({ id, type, inputRef, children }) {
+export default function ProjectInput({
+  id,
+  type,
+  inputRef,
+  children,
+  ...props
+}) {
   const stylingClasses = {
     input:
       'bg-stone-200 text-stone-800 rounded-sm text-lg p-2 shadow-md border border-stone-300 mb-5',
